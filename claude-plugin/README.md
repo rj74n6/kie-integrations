@@ -1,49 +1,67 @@
 # KIE Document Extractor — Claude Code Plugin
 
-A [Claude Code Plugin](https://docs.anthropic.com/en/docs/claude-code) that registers document extraction as a tool Claude can invoke during conversations.
+A [Claude Code Plugin](https://code.claude.com/docs/en/plugins) that adds document extraction capabilities to Claude Code. Provides both a skill (guided extraction workflow) and an MCP tool (direct `extract_document` tool access).
 
-## Overview
+## What's included
 
-This plugin exposes the KIE document extraction API as a native Claude Code tool. When registered, Claude can call the `doc-extractor` tool to extract structured data from documents using a JSON schema — without the user needing to run any scripts manually.
+| Component | Description |
+|-----------|-------------|
+| **Skill** `/doc-extractor:extract` | Guided workflow — collects inputs, builds schema, runs extraction, reviews results |
+| **MCP tool** `extract_document` | Direct tool — Claude can call extraction programmatically during any conversation |
+
+Both components are fully self-contained with zero external Python dependencies (the MCP server uses PEP 723 inline metadata so `uv run` handles the `mcp` package automatically).
 
 ## Installation
 
-Copy the plugin directory into your project:
+### Local testing
 
 ```bash
-cp -r claude-plugin/doc-extractor /path/to/your-project/
+claude --plugin-dir ./claude-plugin/doc-extractor
 ```
 
-Or register it as a plugin in your Claude Code configuration.
+### Install to user scope
 
-## Plugin manifest
+Add the plugin directory to a [marketplace](https://code.claude.com/docs/en/plugin-marketplaces), then:
 
-The plugin is defined in `doc-extractor/.claude-plugin/plugin.json`:
-
-```json
-{
-  "name": "doc-extractor",
-  "description": "Extract structured data from documents using a KIE API",
-  "version": "1.0.0"
-}
+```bash
+claude plugin install doc-extractor@<marketplace>
 ```
 
 ## Usage
 
-Once registered, Claude will automatically have access to the `doc-extractor` tool. Ask Claude to extract data from any supported document:
-
-> "Extract the vendor name, invoice number, and line items from this PDF."
-
-Claude will invoke the plugin, which calls the KIE extraction API and returns structured JSON results.
-
-## File structure
+### Via the skill
 
 ```
-claude-plugin/
-├── README.md                       # This file
-└── doc-extractor/
-    └── .claude-plugin/
-        └── plugin.json             # Plugin manifest
+/doc-extractor:extract
+```
+
+Claude will ask for a document and what fields to extract, then handle everything automatically. You can also provide arguments directly:
+
+```
+/doc-extractor:extract invoice.pdf — extract vendor name, date, and total
+```
+
+### Via the MCP tool
+
+Once the plugin is loaded, Claude has access to the `extract_document` tool and will use it automatically when you ask to extract data from a document.
+
+## Plugin structure
+
+```
+doc-extractor/
+├── .claude-plugin/
+│   └── plugin.json              # Plugin manifest
+├── skills/
+│   └── extract/
+│       ├── SKILL.md             # Skill definition
+│       ├── scripts/
+│       │   └── extract.py       # Extraction script (stdlib only)
+│       └── references/
+│           └── example_schemas.md
+├── .mcp.json                    # MCP server configuration
+├── scripts/
+│   └── mcp-server.py            # MCP server (PEP 723 inline deps)
+└── README.md
 ```
 
 ## Configuration
@@ -70,4 +88,6 @@ Schemas define the fields to extract. Keys are field names; values are type hint
 }
 ```
 
-See the [root README](../README.md) for the full schema format and API details.
+See [`skills/extract/references/example_schemas.md`](doc-extractor/skills/extract/references/example_schemas.md) for ready-made schemas for invoices, receipts, W-2s, bills of lading, and purchase orders.
+
+See the [root README](../README.md) for full API and schema format details.

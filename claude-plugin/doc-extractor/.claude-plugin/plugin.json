@@ -1,5 +1,6 @@
 {
   "name": "doc-extractor",
-  "description": "Extract structured data from documents using a KIE API",
-  "version": "1.0.0"
+  "description": "Extract structured data from documents (images/PDFs) using a JSON schema via the KIE extraction API",
+  "version": "1.0.0",
+  "keywords": ["extraction", "documents", "ocr", "kie"]
 }

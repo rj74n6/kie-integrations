@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "doc-extractor": {
+      "command": "uv",
+      "args": ["run", "${CLAUDE_PLUGIN_ROOT}/scripts/mcp-server.py"]
+    }
+  }
+}

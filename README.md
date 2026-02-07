@@ -71,7 +71,7 @@ tool = KIEExtractDocumentTool()
 
 **Claude Code Skill:** Copy or symlink `claude-skill/` into your skills directory.
 
-**Claude Code Plugin:** Copy `claude-plugin/doc-extractor/` into your project.
+**Claude Code Plugin:** `claude --plugin-dir ./claude-plugin/doc-extractor`
 
 ## KIE API
 
@@ -135,8 +135,11 @@ kie-integrations/
 │   ├── SKILL.md
 │   ├── scripts/extract.py
 │   └── references/
-├── claude-plugin/           # Claude Code plugin
+├── claude-plugin/           # Claude Code plugin (skill + MCP tool)
 │   └── doc-extractor/
+│       ├── skills/extract/
+│       ├── scripts/mcp-server.py
+│       └── .mcp.json
 ├── mcp-server/              # MCP server (FastMCP)
 │   ├── src/kie_mcp_server/
 │   └── tests/
