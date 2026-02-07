@@ -1,0 +1,70 @@
+{
+    "title": "CMS-1500 Health Insurance Claim Extraction",
+    "type": "object",
+    "properties": {
+      "patient_information": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "description": "Box 2: Last Name, First Name, Middle Initial" },
+          "birth_date": {
+            "type": "object",
+            "properties": {
+              "mm": { "type": "string" },
+              "dd": { "type": "string" },
+              "yy": { "type": "string" }
+            }
+          },
+          "sex": { "type": "string", "description": "Box 3 checkbox" },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street": { "type": "string" },
+              "city": { "type": "string" },
+              "state": { "type": "string" },
+              "zip": { "type": "string" }
+            }
+          },
+          "phone": { "type": "string" }
+        }
+      },
+      "insurance_information": {
+        "type": "object",
+        "properties": {
+          "program_type": { "type": "string", "description": "Box 1 checkbox (Medicare, Medicaid, etc.)" },
+          "insured_id": { "type": "string", "description": "Box 1a" },
+          "insured_name": { "type": "string", "description": "Box 4" },
+          "policy_group_number": { "type": "string", "description": "Box 11" },
+          "plan_name": { "type": "string", "description": "Box 11c" }
+        }
+      },
+      "claim_details": {
+        "type": "object",
+        "properties": {
+          "illness_date": { "type": "string", "description": "Box 14: Date of current illness/injury" },
+          "unable_to_work_dates": {
+            "type": "object",
+            "properties": {
+              "from": { "type": "string" },
+              "to": { "type": "string" }
+            }
+          },
+          "diagnosis_codes": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Box 21 A-L"
+          },
+          "prior_authorization": { "type": "string", "description": "Box 23" }
+        }
+      },
+      "billing_and_provider": {
+        "type": "object",
+        "properties": {
+          "total_charge": { "type": "number", "description": "Box 28" },
+          "amount_paid": { "type": "number", "description": "Box 29" },
+          "physician_signature": { "type": "string", "description": "Box 31" },
+          "billing_provider_phone": { "type": "string", "description": "Box 33" }
+        }
+      }
+    },
+    "required": ["patient_information", "insurance_information", "claim_details"]
+  }

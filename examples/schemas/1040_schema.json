@@ -1,0 +1,88 @@
+{
+    "title": "IRS Form 1040 Page 1 Extraction",
+    "type": "object",
+    "properties": {
+      "tax_year_info": {
+        "type": "object",
+        "properties": {
+          "calendar_year": { "type": "string" },
+          "ending_date": { "type": "string" }
+        }
+      },
+      "personal_information": {
+        "type": "object",
+        "properties": {
+          "primary_taxpayer": {
+            "type": "object",
+            "properties": {
+              "first_name": { "type": "string" },
+              "last_name": { "type": "string" },
+              "ssn": { "type": "string" }
+            }
+          },
+          "spouse": {
+            "type": "object",
+            "properties": {
+              "first_name": { "type": "string" },
+              "last_name": { "type": "string" },
+              "ssn": { "type": "string" }
+            }
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street": { "type": "string" },
+              "apt_no": { "type": "string" },
+              "city": { "type": "string" },
+              "state": { "type": "string" },
+              "zip": { "type": "string" }
+            }
+          }
+        }
+      },
+      "filing_status": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["Single", "Married filing jointly", "Married filing separately", "Head of household", "Qualifying surviving spouse"] },
+          "child_name_for_hoh": { "type": "string" }
+        }
+      },
+      "digital_assets": {
+        "type": "object",
+        "properties": {
+          "received_or_sold": { "type": "string", "description": "Yes/No checkbox status" }
+        }
+      },
+      "dependents": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "first_name": { "type": "string" },
+            "last_name": { "type": "string" },
+            "ssn": { "type": "string" },
+            "relationship": { "type": "string" },
+            "child_tax_credit": { "type": "string" }
+          }
+        }
+      },
+      "income_summary": {
+        "type": "object",
+        "properties": {
+          "w2_wages": { "type": "number", "description": "Box 1a" },
+          "household_employee_wages": { "type": "number", "description": "Box 1b" },
+          "tax_exempt_interest": { "type": "number", "description": "Box 2a" },
+          "taxable_interest": { "type": "number", "description": "Box 2b" },
+          "qualified_dividends": { "type": "number", "description": "Box 3a" },
+          "ordinary_dividends": { "type": "number", "description": "Box 3b" },
+          "ira_distributions_taxable": { "type": "number", "description": "Box 4b" },
+          "pensions_annuities_taxable": { "type": "number", "description": "Box 5b" },
+          "social_security_taxable": { "type": "number", "description": "Box 6b" },
+          "capital_gain_or_loss": { "type": "number", "description": "Box 7" },
+          "total_income": { "type": "number", "description": "Box 9" },
+          "adjusted_gross_income": { "type": "number", "description": "Box 11" }
+        }
+      }
+    },
+    "required": ["personal_information", "filing_status", "income_summary"]
+  }

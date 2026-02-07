@@ -1,0 +1,25 @@
+{
+  "title": "Invoice Extraction",
+  "type": "object",
+  "properties": {
+    "invoice_number": { "type": "string" },
+    "invoice_date": { "type": "string", "description": "ISO-8601 date" },
+    "vendor_name": { "type": "string" },
+    "billing_address": { "type": "string" },
+    "total_amount": { "type": "number" },
+    "currency": { "type": "string" },
+    "line_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "description": { "type": "string" },
+          "quantity": { "type": "number" },
+          "unit_price": { "type": "number" },
+          "line_total": { "type": "number" }
+        }
+      }
+    }
+  },
+  "required": ["invoice_number", "vendor_name", "total_amount"]
+}

@@ -1,0 +1,64 @@
+{
+    "title": "IRS Form 1099-DIV Extraction",
+    "type": "object",
+    "properties": {
+      "calendar_year": { "type": "string" },
+      "payer_information": {
+        "type": "object",
+        "properties": {
+          "entity_details": { "type": "string", "description": "Payer's name, address, and contact info" },
+          "tin": { "type": "string", "description": "Payer's TIN" }
+        }
+      },
+      "recipient_information": {
+        "type": "object",
+        "properties": {
+          "tin": { "type": "string", "description": "Recipient's TIN" },
+          "name": { "type": "string" },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street": { "type": "string" },
+              "city_state_zip": { "type": "string" }
+            }
+          },
+          "account_number": { "type": "string" }
+        }
+      },
+      "dividend_data": {
+        "type": "object",
+        "properties": {
+          "total_ordinary_dividends": { "type": "number", "description": "Box 1a" },
+          "qualified_dividends": { "type": "number", "description": "Box 1b" },
+          "total_capital_gain_distr": { "type": "number", "description": "Box 2a" },
+          "unrecap_sec_1250_gain": { "type": "number", "description": "Box 2b" },
+          "section_1202_gain": { "type": "number", "description": "Box 2c" },
+          "collectibles_28_gain": { "type": "number", "description": "Box 2d" },
+          "nondividend_distributions": { "type": "number", "description": "Box 3" },
+          "section_199a_dividends": { "type": "number", "description": "Box 5" }
+        }
+      },
+      "tax_withheld": {
+        "type": "object",
+        "properties": {
+          "federal_income_tax": { "type": "number", "description": "Box 4" },
+          "state_tax": { "type": "number", "description": "Box 16" }
+        }
+      },
+      "foreign_details": {
+        "type": "object",
+        "properties": {
+          "foreign_tax_paid": { "type": "number", "description": "Box 7" },
+          "foreign_country": { "type": "string", "description": "Box 8" }
+        }
+      },
+      "state_filing": {
+        "type": "object",
+        "properties": {
+          "state_abbreviation": { "type": "string", "description": "Box 14" },
+          "state_id": { "type": "string", "description": "Box 15" }
+        }
+      }
+    },
+    "required": ["payer_information", "recipient_information", "dividend_data"]
+  }

@@ -1,0 +1,92 @@
+{
+    "title": "URLA 1003 Page 1 Extraction",
+    "type": "object",
+    "properties": {
+      "loan_identifiers": {
+        "type": "object",
+        "properties": {
+          "lender_loan_number": { "type": "string", "description": "Lender Loan No./Universal Loan Identifier" },
+          "agency_case_number": { "type": "string", "description": "Agency Case No." }
+        }
+      },
+      "borrower_identity": {
+        "type": "object",
+        "properties": {
+          "full_name": { "type": "string", "description": "Name (First, Middle, Last, Suffix)" },
+          "alternate_names": { "type": "string" },
+          "ssn": {
+            "type": "object",
+            "properties": {
+              "first_three": { "type": "string" },
+              "middle_two": { "type": "string" },
+              "last_four": { "type": "string" }
+            }
+          },
+          "dob": {
+            "type": "object",
+            "properties": {
+              "month": { "type": "string" },
+              "day": { "type": "string" },
+              "year": { "type": "string" }
+            }
+          },
+          "citizenship": {
+            "type": "object",
+            "properties": {
+              "us_citizen": { "type": "string", "description": "Checkbox status" },
+              "permanent_resident": { "type": "string" },
+              "non_permanent_resident": { "type": "string" }
+            }
+          }
+        }
+      },
+      "contact_information": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "phone_numbers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "enum": ["Home", "Cell", "Work"] },
+                "area_code": { "type": "string" },
+                "central_code": { "type": "string" },
+                "line_number": { "type": "string" },
+                "extension": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "employment_and_income": {
+        "type": "object",
+        "properties": {
+          "employer_name": { "type": "string" },
+          "position_title": { "type": "string" },
+          "start_date": { "type": "string", "description": "Employment Start Date" },
+          "monthly_income_breakdown": {
+            "type": "object",
+            "properties": {
+              "base": { "type": "number" },
+              "overtime": { "type": "number" },
+              "bonus": { "type": "number" },
+              "commission": { "type": "number" },
+              "total": { "type": "number" }
+            }
+          }
+        }
+      },
+      "current_address": {
+        "type": "object",
+        "properties": {
+          "street": { "type": "string" },
+          "city": { "type": "string" },
+          "zip": { "type": "string" },
+          "monthly_rent": { "type": "number" },
+          "duration_years": { "type": "number" }
+        }
+      }
+    },
+    "required": ["borrower_identity", "employment_and_income"]
+  }

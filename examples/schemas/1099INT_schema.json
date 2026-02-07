@@ -1,0 +1,54 @@
+{
+    "title": "IRS Form 1099-INT Extraction",
+    "type": "object",
+    "properties": {
+      "calendar_year": { "type": "integer" },
+      "flags": {
+        "type": "object",
+        "properties": {
+          "void": { "type": "string", "description": "VOID checkbox status" },
+          "corrected": { "type": "string", "description": "CORRECTED checkbox status" }
+        }
+      },
+      "payer_information": {
+        "type": "object",
+        "properties": {
+          "entity_details": { "type": "string", "description": "PAYER'S name, address, and telephone no." },
+          "tin": { "type": "string", "description": "PAYER'S TIN" }
+        }
+      },
+      "recipient_information": {
+        "type": "object",
+        "properties": {
+          "tin": { "type": "string", "description": "RECIPIENT'S TIN" },
+          "name": { "type": "string", "description": "RECIPIENT'S name" },
+          "street_address": { "type": "string" },
+          "city_state_zip_country": { "type": "string" },
+          "account_number": { "type": "string" }
+        }
+      },
+      "interest_and_tax_data": {
+        "type": "object",
+        "properties": {
+          "interest_income": { "type": "number", "description": "Box 1" },
+          "us_savings_bond_interest": { "type": "number", "description": "Box 3" },
+          "federal_income_tax_withheld": { "type": "number", "description": "Box 4" },
+          "investment_expenses": { "type": "number", "description": "Box 5" },
+          "foreign_country_or_territory": { "type": "string", "description": "Box 7" },
+          "specified_private_activity_bond_interest": { "type": "number", "description": "Box 9" },
+          "market_discount": { "type": "number", "description": "Box 10" },
+          "bond_premium": { "type": "number", "description": "Box 11" },
+          "bond_premium_treasury_obligations": { "type": "number", "description": "Box 12" },
+          "bond_premium_tax_exempt_bond": { "type": "number", "description": "Box 13" }
+        }
+      },
+      "state_information": {
+        "type": "object",
+        "properties": {
+          "state_id": { "type": "string", "description": "Box 16" },
+          "state_tax_withheld": { "type": "number", "description": "Box 17" }
+        }
+      }
+    },
+    "required": ["payer_information", "recipient_information", "interest_and_tax_data"]
+  }
