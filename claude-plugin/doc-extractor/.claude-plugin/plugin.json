@@ -1,0 +1,5 @@
+{
+  "name": "doc-extractor",
+  "description": "Extract structured data from documents using a KIE API",
+  "version": "1.0.0"
+}

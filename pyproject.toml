@@ -1,0 +1,11 @@
+[project]
+name = "kie-integrations"
+version = "0.1.0"
+description = "Agent integrations for the KIE document extraction API"
+requires-python = ">=3.10"
+
+[tool.uv.workspace]
+members = ["kie-core", "mcp-server", "openai-function", "langchain-tool"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

@@ -1,0 +1,20 @@
+[project]
+name = "kie-openai"
+version = "0.1.0"
+description = "OpenAI function-calling wrapper for KIE document extraction"
+requires-python = ">=3.10"
+dependencies = [
+    "kie-core",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.sources]
+kie-core = { workspace = true }

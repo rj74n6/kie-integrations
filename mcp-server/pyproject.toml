@@ -1,0 +1,28 @@
+[project]
+name = "kie-mcp-server"
+version = "0.1.0"
+description = "MCP server exposing KIE document extraction as a tool"
+requires-python = ">=3.10"
+dependencies = [
+    "kie-core",
+    "mcp>=1.0",
+]
+
+[project.scripts]
+kie-mcp-server = "kie_mcp_server.__main__:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.sources]
+kie-core = { workspace = true }
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
