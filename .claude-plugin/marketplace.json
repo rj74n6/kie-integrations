@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "doc-extractor",
-      "source": "./claude-plugin/doc-extractor",
+      "source": "./claude-plugins/doc-extractor",
       "description": "Extract structured data from documents (images/PDFs) using a JSON schema via the KIE extraction API"
     }
   ]
