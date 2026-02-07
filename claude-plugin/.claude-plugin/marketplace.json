@@ -1,0 +1,13 @@
+{
+  "name": "kie-integrations",
+  "owner": {
+    "name": "kie"
+  },
+  "plugins": [
+    {
+      "name": "doc-extractor",
+      "source": "./doc-extractor",
+      "description": "Extract structured data from documents (images/PDFs) using a JSON schema via the KIE extraction API"
+    }
+  ]
+}
