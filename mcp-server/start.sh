@@ -62,7 +62,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-transport="${MCP_TRANSPORT:-streamable-http}"
-echo "Starting KIE MCP server (transport=${transport}) ..."
+export MCP_TRANSPORT="${MCP_TRANSPORT:-streamable-http}"
+echo "Starting KIE MCP server (transport=${MCP_TRANSPORT}) ..."
 
 exec uv run --project "$SCRIPT_DIR" kie-mcp-server
