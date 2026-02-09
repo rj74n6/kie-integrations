@@ -8,7 +8,7 @@ info:
   version: "1.0.0"
 
 servers:
-  - url: https://api.dillydally.dev/v1/extract
+  - url: https://api.dillydally.dev
     description: Production
 
 paths:
@@ -92,20 +92,17 @@ components:
 
     ExtractionResponse:
       type: object
-      additionalProperties: true
       description: >
         JSON object with keys matching the request schema. Values are the
         extracted data from the document.
-      example:
-        vendor_name: "Acme Corp"
-        invoice_date: "01/15/2025"
-        total_amount: 1250.00
-        line_items:
-          - description: "Widget A"
-            quantity: 10
-            unit_price: 100.00
-            amount: 1000.00
-          - description: "Widget B"
-            quantity: 5
-            unit_price: 50.00
-            amount: 250.00
+      properties:
+        vendor_name:
+          type: string
+          description: Example extracted field — actual keys match the request schema.
+        invoice_date:
+          type: string
+          description: Example extracted field.
+        total_amount:
+          type: number
+          description: Example extracted field.
+      additionalProperties: true

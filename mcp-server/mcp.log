@@ -1,0 +1,8 @@
+Starting KIE MCP server (transport=streamable-http) ...
+INFO:     Started server process [23687]
+INFO:     Waiting for application startup.
+StreamableHTTP session manager started
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+Created new transport with session ID: c5ba47767420427dab540790e4d59e57
+INFO:     3.224.234.70:0 - "GET /mcp HTTP/1.1" 406 Not Acceptable
