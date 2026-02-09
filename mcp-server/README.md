@@ -97,7 +97,7 @@ To add this MCP server as a custom connector on Claude.ai:
 2. Go to **Claude.ai → Settings → Connectors → Add custom connector**.
 3. Fill in:
    - **Name:** KIE Document Extractor
-   - **Remote MCP server URL:** `https://your-domain.com/mchttps://api.dillydally.dev/mcp`
+   - **Remote MCP server URL:** `https://api.dillydally.dev/mcp`
    - Leave OAuth fields blank (not required).
 
 #### Caddy reverse proxy example
