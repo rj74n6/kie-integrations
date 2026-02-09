@@ -27,16 +27,39 @@ Extract structured data from a document using a JSON schema.
 
 ## Usage
 
-### stdio transport (default)
+### Quick start
+
+```bash
+# Streamable HTTP (default) — listens at http://0.0.0.0:8080/mcp
+./start.sh
+
+# stdio transport — for local MCP clients (Cursor, Claude Code, Claude Desktop)
+./start.sh --transport stdio
+
+# Custom port and API endpoint
+./start.sh --port 9090 --api-url https://kie.example.com/v1/extract
+```
+
+You can also run the server directly with `uv`:
+
+```bash
+# Streamable HTTP (set transport explicitly since uv bypasses start.sh defaults)
+MCP_TRANSPORT=streamable-http uv run kie-mcp-server
+
+# stdio
+uv run kie-mcp-server
+```
+
+### Streamable HTTP transport (default)
+
+The default transport for remote access from Claude.ai connectors and other HTTP-based clients. The server listens at `http://0.0.0.0:8080/mcp`.
+
+### stdio transport
 
 For local MCP clients (Claude Code, Cursor, Claude Desktop, etc.):
 
 ```bash
-# Run directly
-uv run kie-mcp-server
-
-# Or as a module
-uv run python -m kie_mcp_server
+./start.sh --transport stdio
 ```
 
 #### Configuration in MCP clients
@@ -55,24 +78,16 @@ uv run python -m kie_mcp_server
 }
 ```
 
-### Streamable HTTP transport (remote)
-
-For remote access from Claude.ai connectors:
-
-```bash
-MCP_TRANSPORT=streamable-http uv run kie-mcp-server
-```
-
-The server listens at `http://0.0.0.0:8080/mcp` by default.
-
-#### Environment variables
+### Environment variables
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `MCP_TRANSPORT` | Transport mode (`stdio` or `streamable-http`) | `stdio` |
+| `MCP_TRANSPORT` | Transport mode (`streamable-http` or `stdio`) | `streamable-http` (`start.sh`) / `stdio` (`uv run`) |
 | `MCP_HOST` | Bind address (HTTP mode only) | `0.0.0.0` |
 | `MCP_PORT` | Listen port (HTTP mode only) | `8080` |
 | `KIE_API_URL` | KIE extraction API endpoint | `http://localhost:8000/v1/extract` |
+
+> **Note:** `start.sh` defaults `MCP_TRANSPORT` to `streamable-http`. When running via `uv run kie-mcp-server` directly, the Python entry point defaults to `stdio`.
 
 ### Claude.ai custom connector
 
@@ -82,7 +97,7 @@ To add this MCP server as a custom connector on Claude.ai:
 2. Go to **Claude.ai → Settings → Connectors → Add custom connector**.
 3. Fill in:
    - **Name:** KIE Document Extractor
-   - **Remote MCP server URL:** `https://your-domain.com/mcp`
+   - **Remote MCP server URL:** `https://your-domain.com/mchttps://api.dillydally.dev/mcp`
    - Leave OAuth fields blank (not required).
 
 #### Caddy reverse proxy example
@@ -106,9 +121,7 @@ your-domain.com {
 Then start the MCP server:
 
 ```bash
-KIE_API_URL=http://localhost:8000/v1/extract \
-MCP_TRANSPORT=streamable-http \
-  uv run kie-mcp-server
+KIE_API_URL=http://localhost:8000/v1/extract ./start.sh
 ```
 
 ## File structure
@@ -117,6 +130,7 @@ MCP_TRANSPORT=streamable-http \
 mcp-server/
 ├── README.md
 ├── pyproject.toml
+├── start.sh                       # Shell script to start the server
 ├── src/
 │   └── kie_mcp_server/
 │       ├── __init__.py
