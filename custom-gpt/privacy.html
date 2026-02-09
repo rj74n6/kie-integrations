@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — KIE Document Extractor</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #1a1a1a;
+      --muted: #555;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --section-bg: #f9fafb;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111111;
+        --fg: #e5e5e5;
+        --muted: #a3a3a3;
+        --accent: #60a5fa;
+        --border: #2a2a2a;
+        --section-bg: #1a1a1a;
+      }
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.7;
+      color: var(--fg);
+      background: var(--bg);
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+    }
+    h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+    .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 2.5rem; }
+    h2 {
+      font-size: 1.15rem;
+      margin-top: 2.25rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    p, li { margin-bottom: 0.75rem; }
+    ul { padding-left: 1.5rem; }
+    li { padding-left: 0.25rem; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .highlight {
+      background: var(--section-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+    }
+    .highlight p:last-child { margin-bottom: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.925rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    th { font-weight: 600; }
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Privacy Policy</h1>
+  <p class="subtitle">KIE Document Extractor &mdash; Custom GPT &middot; Last updated: February 9, 2026</p>
+
+  <div class="highlight">
+    <p><strong>Summary:</strong> Documents you submit are processed in real time to extract the fields you request. We do not store your documents, extracted data, or conversation content after the request completes.</p>
+  </div>
+
+  <h2>1. What this GPT does</h2>
+  <p>
+    KIE Document Extractor is a Custom GPT available through ChatGPT. When you upload a document
+    (PDF or image) and describe what information you need, the GPT sends the document to the
+    KIE extraction API at <code>api.dillydally.dev</code> and returns the extracted data to you
+    in the ChatGPT conversation.
+  </p>
+
+  <h2>2. Data we collect</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Collected?</th>
+        <th>Stored?</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Uploaded documents</td>
+        <td>Transmitted</td>
+        <td>No</td>
+        <td>Processed in memory for extraction, then discarded</td>
+      </tr>
+      <tr>
+        <td>Extraction schema</td>
+        <td>Transmitted</td>
+        <td>No</td>
+        <td>Defines which fields to extract</td>
+      </tr>
+      <tr>
+        <td>Extracted results</td>
+        <td>Generated</td>
+        <td>No</td>
+        <td>Returned to you in the conversation</td>
+      </tr>
+      <tr>
+        <td>IP address / request metadata</td>
+        <td>Yes</td>
+        <td>Server logs (up to 30 days)</td>
+        <td>Security monitoring, abuse prevention, debugging</td>
+      </tr>
+      <tr>
+        <td>Conversation content</td>
+        <td>No</td>
+        <td>No</td>
+        <td>Handled entirely by OpenAI; we do not receive it</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3. How documents are processed</h2>
+  <ul>
+    <li>Your document is base64-encoded by ChatGPT and sent to the KIE extraction API over HTTPS.</li>
+    <li>The API processes the document <strong>in memory only</strong> &mdash; no copy is written to disk or any database.</li>
+    <li>The extracted fields are returned in the API response and displayed in your ChatGPT conversation.</li>
+    <li>Once the HTTP response is sent, the document data is released from memory.</li>
+  </ul>
+
+  <h2>4. Data sharing</h2>
+  <p>We do not sell, rent, or share your document contents or extracted data with any third party. Your data is transmitted between:</p>
+  <ul>
+    <li><strong>ChatGPT (OpenAI)</strong> &mdash; where the conversation takes place. OpenAI's
+      <a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">privacy policy</a> governs how they handle your conversation and uploaded files.</li>
+    <li><strong>KIE extraction API</strong> &mdash; hosted at <code>api.dillydally.dev</code>, which processes your document and returns results.</li>
+  </ul>
+
+  <h2>5. Data retention</h2>
+  <ul>
+    <li><strong>Documents and extracted data:</strong> Not retained. Discarded immediately after processing.</li>
+    <li><strong>Server logs</strong> (IP addresses, timestamps, HTTP status codes): Retained for up to 30 days for security and debugging purposes, then automatically deleted.</li>
+  </ul>
+
+  <h2>6. Security</h2>
+  <ul>
+    <li>All data in transit is encrypted using TLS (HTTPS).</li>
+    <li>The API does not persist documents to disk or any external storage.</li>
+    <li>Access to server infrastructure is restricted to authorised personnel.</li>
+  </ul>
+
+  <h2>7. Your rights</h2>
+  <p>Since we do not store your documents or extraction results, there is no personal data to access, correct, or delete on our side. For data held by OpenAI (your ChatGPT conversations), refer to <a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">OpenAI's privacy policy</a>.</p>
+  <p>If you have questions about server logs or believe your data has been processed in error, contact us (see below).</p>
+
+  <h2>8. Children's privacy</h2>
+  <p>This service is not directed at children under 13. We do not knowingly process documents submitted by children.</p>
+
+  <h2>9. Changes to this policy</h2>
+  <p>We may update this policy from time to time. The "Last updated" date at the top of this page reflects the most recent revision. Continued use of the GPT after changes constitutes acceptance of the updated policy.</p>
+
+  <h2>10. Contact</h2>
+  <p>For privacy-related questions or concerns, please reach out:</p>
+  <ul>
+    <li>Email: <a href="mailto:joy@dillydally.dev">privacy@dillydally.dev</a></li>
+  </ul>
+
+  <footer>
+    <p>&copy; 2026 DillyDally. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
