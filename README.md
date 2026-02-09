@@ -12,16 +12,17 @@ Agent integrations for the KIE document extraction API. Each package wraps the s
 | [`mcp-server/`](mcp-server/) | [Model Context Protocol](https://modelcontextprotocol.io/) Server | Available |
 | [`openai-function/`](openai-function/) | [OpenAI Function Calling](https://platform.openai.com/docs/guides/function-calling) | Available |
 | [`langchain-tool/`](langchain-tool/) | [LangChain Tool](https://python.langchain.com/docs/concepts/tools/) | Available |
+| [`custom-gpt/`](custom-gpt/) | [OpenAI Custom GPT](https://chatgpt.com/gpts) (GPT Store) | Available |
 
 ## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────┐
 │  Agent frameworks                                   │
-│  ┌──────────┐ ┌────────────┐ ┌───────────────────┐  │
-│  │MCP Server│ │OpenAI Func │ │ LangChain Tool    │  │
-│  └────┬─────┘ └─────┬──────┘ └────────┬──────────┘  │
-│       └──────────────┼─────────────────┘             │
+│  ┌──────────┐ ┌────────────┐ ┌──────────────┐        │
+│  │MCP Server│ │OpenAI Func │ │LangChain Tool│        │
+│  └────┬─────┘ └─────┬──────┘ └──────┬───────┘        │
+│       └──────────────┼───────────────┘                │
 │                      ▼                               │
 │              ┌──────────────┐                        │
 │              │   kie-core   │  httpx (sync + async)  │
@@ -72,6 +73,8 @@ tool = KIEExtractDocumentTool()
 **Claude Code Skill:** Copy or symlink `claude-skill/` into your skills directory.
 
 **Claude Code Plugin:** `claude --plugin-dir ./claude-plugin/doc-extractor`
+
+**Custom GPT:** Follow the setup guide in [`custom-gpt/README.md`](custom-gpt/README.md) to publish to the GPT Store.
 
 ## KIE API
 
@@ -149,6 +152,9 @@ kie-integrations/
 ├── langchain-tool/          # LangChain BaseTool wrapper
 │   ├── src/kie_langchain/
 │   └── tests/
+├── custom-gpt/              # Custom GPT for the OpenAI GPT Store
+│   ├── openapi.yaml         #   OpenAPI spec (Action)
+│   └── system_prompt.md     #   GPT system instructions
 ├── pyproject.toml           # uv workspace root
 └── README.md
 ```

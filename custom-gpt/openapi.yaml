@@ -1,0 +1,111 @@
+openapi: "3.1.0"
+info:
+  title: KIE Document Extractor
+  description: >
+    Extract structured data from documents (PDFs and images) using a JSON schema.
+    Send a base64-encoded document and a schema defining the fields you want, and
+    receive extracted values as JSON.
+  version: "1.0.0"
+
+servers:
+  - url: https://api.dillydally.dev/v1/extract
+    description: Production
+
+paths:
+  /v1/extract:
+    post:
+      operationId: extractDocument
+      summary: Extract structured data from a document
+      description: >
+        Accepts a base64-encoded document (PDF or image) and a flat JSON schema
+        defining the fields to extract. Returns a JSON object with the extracted
+        field values.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExtractionRequest"
+      responses:
+        "200":
+          description: Successfully extracted fields from the document.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExtractionResponse"
+        "400":
+          description: Invalid request (e.g. malformed base64, missing fields).
+        "422":
+          description: Validation error.
+        "500":
+          description: Internal server error.
+
+components:
+  schemas:
+    ExtractionRequest:
+      type: object
+      required:
+        - document
+        - schema
+      properties:
+        document:
+          type: object
+          required:
+            - content
+            - type
+          properties:
+            content:
+              type: string
+              description: Base64-encoded document content.
+            type:
+              type: string
+              enum:
+                - pdf
+                - image
+              description: >
+                Document type. Use "pdf" for PDF files and "image" for PNG, JPG,
+                TIFF, and other image formats.
+        schema:
+          type: object
+          additionalProperties: true
+          description: >
+            Flat JSON object where keys are field names to extract and values are
+            type hints. Supported type hints include "string", "number",
+            "date (MM/DD/YYYY)", "boolean", "currency", or any descriptive hint
+            (e.g. "5-digit zip code"). For tables or line items, use an array of
+            objects.
+          example:
+            vendor_name: "string"
+            invoice_date: "date (MM/DD/YYYY)"
+            total_amount: "number"
+            line_items:
+              - description: "string"
+                quantity: "number"
+                unit_price: "number"
+                amount: "number"
+        options:
+          type: object
+          properties:
+            model:
+              type: string
+              description: Optional model ID for extraction.
+
+    ExtractionResponse:
+      type: object
+      additionalProperties: true
+      description: >
+        JSON object with keys matching the request schema. Values are the
+        extracted data from the document.
+      example:
+        vendor_name: "Acme Corp"
+        invoice_date: "01/15/2025"
+        total_amount: 1250.00
+        line_items:
+          - description: "Widget A"
+            quantity: 10
+            unit_price: 100.00
+            amount: 1000.00
+          - description: "Widget B"
+            quantity: 5
+            unit_price: 50.00
+            amount: 250.00
