@@ -1,16 +1,15 @@
 """Shared fixtures for mcp-server tests."""
 
-import json
+import base64
 
 import pytest
 
 
 @pytest.fixture()
-def sample_image(tmp_path):
-    """Create a minimal PNG-like file."""
-    img = tmp_path / "test.png"
-    img.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 100)
-    return img
+def sample_b64():
+    """Return a base64-encoded PNG-like payload and its document type."""
+    raw = b"\x89PNG\r\n\x1a\n" + b"\x00" * 100
+    return base64.b64encode(raw).decode("ascii"), "image"
 
 
 @pytest.fixture()

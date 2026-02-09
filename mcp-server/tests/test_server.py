@@ -7,6 +7,8 @@ import pytest
 
 from kie_mcp_server.server import extract_document, server
 
+MOCK_TARGET = "kie_mcp_server.server.extract_async"
+
 
 # ── essential ─────────────────────────────────────────────────────────
 
@@ -27,17 +29,19 @@ class TestMCPServerEssential:
         tools = await server.list_tools()
         tool = next(t for t in tools if t.name == "extract_document")
         props = tool.inputSchema.get("properties", {})
-        assert "document_path" in props
+        assert "document_content" in props
+        assert "document_type" in props
         assert "schema" in props
 
-    async def test_extract_tool_call(self, sample_image, mock_result):
+    async def test_extract_tool_call(self, sample_b64, mock_result):
+        doc_b64, doc_type = sample_b64
         with patch(
-            "kie_mcp_server.server.extract_document_async",
+            MOCK_TARGET,
             new_callable=AsyncMock,
             return_value=mock_result,
         ):
             result_str = await extract_document(
-                str(sample_image), {"vendor_name": "string"}
+                doc_b64, doc_type, {"vendor_name": "string"}
             )
         parsed = json.loads(result_str)
         assert parsed == mock_result
@@ -49,38 +53,41 @@ class TestMCPServerEssential:
 class TestMCPServerComprehensive:
     """Extended tests."""
 
-    async def test_extract_with_model(self, sample_image, mock_result):
+    async def test_extract_with_model(self, sample_b64, mock_result):
+        doc_b64, doc_type = sample_b64
         with patch(
-            "kie_mcp_server.server.extract_document_async",
+            MOCK_TARGET,
             new_callable=AsyncMock,
             return_value=mock_result,
         ) as mock_fn:
             await extract_document(
-                str(sample_image), {"name": "string"}, model="test-model"
+                doc_b64, doc_type, {"name": "string"}, model="test-model"
             )
         mock_fn.assert_awaited_once_with(
-            str(sample_image), {"name": "string"}, model="test-model"
+            doc_b64, doc_type, {"name": "string"}, model="test-model"
         )
 
-    async def test_extract_returns_json_string(self, sample_image):
+    async def test_extract_returns_json_string(self, sample_b64):
+        doc_b64, doc_type = sample_b64
         with patch(
-            "kie_mcp_server.server.extract_document_async",
+            MOCK_TARGET,
             new_callable=AsyncMock,
             return_value={"a": 1},
         ):
-            result = await extract_document(str(sample_image), {"a": "number"})
+            result = await extract_document(doc_b64, doc_type, {"a": "number"})
         # Must be valid JSON string
         assert isinstance(result, str)
         assert json.loads(result) == {"a": 1}
 
-    async def test_extract_api_error_propagates(self, sample_image):
+    async def test_extract_api_error_propagates(self, sample_b64):
+        doc_b64, doc_type = sample_b64
         with patch(
-            "kie_mcp_server.server.extract_document_async",
+            MOCK_TARGET,
             new_callable=AsyncMock,
             side_effect=RuntimeError("API request failed (500): error"),
         ):
             with pytest.raises(RuntimeError, match="API request failed"):
-                await extract_document(str(sample_image), {"x": "string"})
+                await extract_document(doc_b64, doc_type, {"x": "string"})
 
     async def test_tool_schema_model_is_optional(self):
         tools = await server.list_tools()
@@ -88,18 +95,19 @@ class TestMCPServerComprehensive:
         required = tool.inputSchema.get("required", [])
         assert "model" not in required
 
-    async def test_concurrent_calls(self, sample_image, mock_result):
+    async def test_concurrent_calls(self, sample_b64, mock_result):
         """Two concurrent calls don't interfere."""
         import asyncio
 
+        doc_b64, doc_type = sample_b64
         with patch(
-            "kie_mcp_server.server.extract_document_async",
+            MOCK_TARGET,
             new_callable=AsyncMock,
             return_value=mock_result,
         ):
             r1, r2 = await asyncio.gather(
-                extract_document(str(sample_image), {"a": "string"}),
-                extract_document(str(sample_image), {"b": "number"}),
+                extract_document(doc_b64, doc_type, {"a": "string"}),
+                extract_document(doc_b64, doc_type, {"b": "number"}),
             )
         assert json.loads(r1) == mock_result
         assert json.loads(r2) == mock_result

@@ -8,11 +8,11 @@ Usage: ./run_extraction.sh --schema <schema.json> --document <file> [options]
 Arguments:
   --schema     Path to a JSON Schema file.
   --document   Path to a document file (PDF or image).
-  --endpoint   Optional extract endpoint (default: https://dillydally.dev/v1/extract).
+  --endpoint   Optional extract endpoint (default: https://api.dillydally.dev/v1/extract).
 EOF
 }
 
-endpoint="${KIE_API_URL:-https://dillydally.dev/v1/extract}"
+endpoint="${KIE_API_URL:-https://api.dillydally.dev/v1/extract}"
 schema_path=""
 document_path=""
 model_id=""
