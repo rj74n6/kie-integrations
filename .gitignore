@@ -34,3 +34,6 @@ coverage.xml
 .vscode/
 *.swp
 *.swo
+
+# Logs
+*.log
