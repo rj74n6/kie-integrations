@@ -9,12 +9,12 @@ Arguments:
   --document   Path to a document file (PDF or image).
   --schema     Optional path to a JSON Schema file. If omitted, the server
                auto-classifies the document and selects a predefined schema.
-  --endpoint   Optional extract endpoint (default: http://localhost:8000/v1/kie/extract).
+  --endpoint   Optional extract endpoint (default: https://api.dillydally.dev/v1/kie/extract).
   --model      Optional model ID (e.g., joy-vl-3b-sglang for SGLang VLM).
 EOF
 }
 
-endpoint="${KIE_API_URL:-http://localhost:8000/v1/kie/extract}"
+endpoint="${KIE_API_URL:-https://api.dillydally.dev/v1/kie/extract}"
 schema_path=""
 document_path=""
 model_id=""
